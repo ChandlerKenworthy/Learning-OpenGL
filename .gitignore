@@ -3,3 +3,6 @@ build/
 
 # MacOS
 .DS_Store
+
+# Ignore external libraries (GLFW, glad)
+external/
