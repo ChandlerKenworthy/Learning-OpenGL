@@ -8,5 +8,5 @@ build/
 external/
 
 # VSCode
-.code-workspace
+*.code-workspace
 .vscode
