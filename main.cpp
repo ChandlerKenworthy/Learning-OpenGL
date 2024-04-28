@@ -4,6 +4,8 @@
 #include <math.h>
 
 #include "Shader.hpp"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -48,9 +50,9 @@ int main() {
 
     float vertices2[] = {
        // positions         // colors
-        0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom right
-       -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, // bottom left
-        -0.5f,  0.0f, 0.0f, 0.0f, 0.0f, 1.0f  // top
+        0.25f, -0.75f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom right
+       -0.6f, -0.75f, 0.0f, 0.0f, 1.0f, 0.0f, // bottom left
+        -0.3f,  0.2f, 0.0f, 0.0f, 0.0f, 1.0f  // top
     };
 
 
@@ -77,6 +79,16 @@ int main() {
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
+    // Load and create a texture
+    int width, height, nChannels;
+    unsigned char* data = stbi_load("textures/container.jpg", &width, &height, &nChannels, 0);
+    unsigned int texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    stbi_image_free(data);
+
     while(!glfwWindowShouldClose(window)) {
         // everything that needs to happen each frame goes inside this loop
         processInput(window);
@@ -90,9 +102,9 @@ int main() {
 
         // Update the fragment shader uniform over time
         //float timeValue = glfwGetTime();
-        //float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
+        //float rightOffset = (sin(timeValue) / 2.0f); // in range [-0.5, 0.5]
         //int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
-        //myShader.setFloat("ourColor", greenValue);
+        //myShader.setFloat("rightOffset", rightOffset);
         
         //glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 

@@ -8,6 +8,8 @@ find_package(glfw3 REQUIRED)
 # Add the executable target
 add_executable(FluidSim main.cpp external/glad.c src/Shader.cpp)
 
+set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk")
+
 # Set C++ standard to C++17
 target_compile_features(FluidSim PRIVATE cxx_std_17)
 
