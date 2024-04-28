@@ -7,6 +7,9 @@ build/
 # Ignore external libraries (GLFW, glad)
 external/
 
+# GLM
+include/glm/
+
 # VSCode
 *.code-workspace
 .vscode
