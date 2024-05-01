@@ -175,7 +175,6 @@ int main() {
         glm::vec3(-1.3f,  1.0f,  -1.5f)
     };
 
-
     while(!glfwWindowShouldClose(window)) {
         // everything that needs to happen each frame goes inside this loop
         processInput(window);
@@ -194,7 +193,16 @@ int main() {
         myShader.use();
 
         glm::mat4 view = glm::mat4(1.0f);
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f)); // Move scene "into screen" so camera is "moving" away from the scene
+        const float radius = 10.0f; // arbitrary radius the camera will rotate around
+        float camX = sin(glfwGetTime()) * radius; // just trig
+         float camZ = cos(glfwGetTime()) * radius; // just trig
+
+        // matrix built form cross products to form a cartesian co-ordinate system around the camera
+        view = glm::lookAt(
+            glm::vec3(camX, 0.0f, camZ), 
+            glm::vec3(0.0f, 0.0f, 0.0f), 
+            glm::vec3(0.0f, 1.0f, 0.0f)
+        );
         
         glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
